@@ -1,3 +1,5 @@
+Create .env file with the same structure as example.env.
+
 To start:
 ```docker-compose up```
 
