@@ -1,3 +1,5 @@
 /.idea
 /venv
 config.ini
+/docker/minio/.env
+/docker/minio/docker
