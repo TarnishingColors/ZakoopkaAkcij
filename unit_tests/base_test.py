@@ -1,3 +1,3 @@
 def test_base():
-    "sample test"
-    return 1
+    """sample test"""
+    assert 1
