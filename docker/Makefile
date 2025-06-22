@@ -1,12 +1,11 @@
 build:
 	docker compose \
-		-f minio/docker-compose.yaml up minio \
-		build
+		-f data_lakehouse/docker-compose.yaml build dremio minio nessie
 
 up:
 	docker compose \
-		-f minio/docker-compose.yaml up minio -d
+		-f data_lakehouse/docker-compose.yaml up dremio minio nessie -d
 
 down:
 	docker compose \
-		-f minio/docker-compose.yaml down minio
+		-f data_lakehouse/docker-compose.yaml down dremio minio nessie
