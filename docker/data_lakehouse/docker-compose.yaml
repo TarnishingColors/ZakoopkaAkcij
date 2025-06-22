@@ -1,0 +1,45 @@
+services:
+  # Nessie Catalog Server Using In-Memory Store
+  nessie:
+    image: projectnessie/nessie:latest
+    container_name: nessie
+    networks:
+      iceberg:
+    ports:
+      - 19120:19120
+  # MinIO Storage Server
+  minio:
+    image: minio/minio:latest
+    container_name: data_lakehouse
+    ports:
+      - "9000:9000"     # MinIO S3 API
+      - "9001:9001"     # MinIO web UI
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_DOMAIN: storage
+      MINIO_REGION_NAME: us-east-1
+      MINIO_REGION: us-east-1
+    networks:
+      iceberg:
+    volumes:
+      - ./data:/data
+    command: server /data --console-address ":9001"
+    profiles: ["storage"]
+  # Dremio
+  dremio:
+    platform: linux/x86_64
+    image: dremio/dremio-oss:latest
+    ports:
+      - 9047:9047
+      - 31010:31010
+      - 32010:32010
+    container_name: dremio
+    volumes:
+      - ./dremio-data:/opt/dremio/data
+    environment:
+      - DREMIO_JAVA_SERVER_EXTRA_OPTS=-Dpaths.dist=file:///opt/dremio/data/dist
+    networks:
+      iceberg:
+networks:
+  iceberg:

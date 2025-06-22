@@ -1,5 +1,5 @@
 /.idea
 /venv
 config.ini
-/docker/minio/.env
-/docker/minio/data
+/docker/data_lakehouse/.env
+/docker/data_lakehouse/data
